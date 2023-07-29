@@ -2,10 +2,11 @@
 # For compiling C++ (native): build-essential
 # For compiling .NET 6 (dotnet6-pinvoke): dotnet-sdk-6.0
 # For compiling .NET 7 (dotnet7aot-pinvoke): dotnet-sdk-7.0, clang, zlib1g-dev
+# For compiling Rust (rust-cxx): cargo
 # For running benchmark: hyperfine
 setup-prereqs-ubuntu:
 	sudo apt update
-	sudo apt install -y make build-essential clang zlib1g-dev dotnet-sdk-6.0 dotnet-sdk-7.0 hyperfine 
+	sudo apt install -y make build-essential clang zlib1g-dev dotnet-sdk-6.0 dotnet-sdk-7.0 cargo hyperfine
 
 compile-native:
 	g++ -shared -fPIC ./native/NativeStuff.cc -o ./native/NativeStuff.so
@@ -33,10 +34,15 @@ compile-rust-cxx:
 	cd ..
 	rm ./rust-cxx/src/NativeStuff.*
 
-prepare-and-benchmark:
+compile-all:
 	make compile-native
+	make compile-dotnet6
 	make compile-dotnet6-pinvoke
 	make compile-dotnet7aot-pinvoke
+	make compile-rust-cxx
+
+prepare-and-benchmark:
+	make compile-all
 	make benchmark
 
 benchmark:
