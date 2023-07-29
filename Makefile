@@ -1,6 +1,6 @@
 setup-prereqs-ubuntu:
 	sudo apt update
-	sudo apt install -y build-essential dotnet-sdk-6.0 dotnet-sdk-7.0 hyperfine
+	sudo apt install -y build-essential clang zlib1g-dev dotnet-sdk-6.0 dotnet-sdk-7.0 hyperfine 
 
 compile-native:
 	g++ -shared -fPIC ./native/NativeStuff.cc -o ./native/NativeStuff.so
@@ -14,7 +14,7 @@ compile-dotnet6-pinvoke:
 compile-dotnet7aot-pinvoke:
 	make compile-native
 	dotnet publish ./dotnet7aot-pinvoke/DotNet7AotPInvoke.csproj -c Release
-	cp ./native/NativeStuff.so ./dotnet7aot-pinvoke/bin/Release/net7.0/NativeStuff.so
+	cp ./native/NativeStuff.so ./dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/NativeStuff.so
 
 benchmark:
 	make compile-native
