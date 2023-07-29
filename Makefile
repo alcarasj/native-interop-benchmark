@@ -20,4 +20,4 @@ benchmark:
 	make compile-native
 	make compile-dotnet6-pinvoke
 	make compile-dotnet7aot-pinvoke
-	hyperfine --show-output --warmup 5 --runs 10 './native/Main' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' 
+	hyperfine --show-output --warmup 5 --runs 10 './native/Main' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' './dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/DotNet7AotPInvoke'
