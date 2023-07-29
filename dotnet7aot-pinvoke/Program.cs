@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace DotNet6PInvoke
+namespace DotNet7AotPInvoke
 {
     internal class Program
     {
