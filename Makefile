@@ -13,14 +13,15 @@ compile-native:
 	g++ ./native/Main.cc -o ./native/Main
 
 compile-dotnet6:
-	make compile-native
 	dotnet publish ./dotnet6/DotNet6.csproj -c Release
-	cp ./native/NativeStuff.so ./dotnet6/bin/Release/net6.0/NativeStuff.so
 
 compile-dotnet6-pinvoke:
 	make compile-native
 	dotnet publish ./dotnet6-pinvoke/DotNet6PInvoke.csproj -c Release
 	cp ./native/NativeStuff.so ./dotnet6-pinvoke/bin/Release/net6.0/NativeStuff.so
+
+compile-dotnet7aot:
+	dotnet publish ./dotnet7aot/DotNet7Aot.csproj -c Release
 
 compile-dotnet7aot-pinvoke:
 	make compile-native
@@ -38,6 +39,7 @@ compile-all:
 	make compile-native
 	make compile-dotnet6
 	make compile-dotnet6-pinvoke
+	make compile-dotnet7aot
 	make compile-dotnet7aot-pinvoke
 	make compile-rust-cxx
 
@@ -46,4 +48,4 @@ prepare-and-benchmark:
 	make benchmark
 
 benchmark:
-	hyperfine --show-output --warmup 5 --runs 100 './native/Main' 'dotnet ./dotnet6/bin/Release/net6.0/DotNet6.dll' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' './dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/DotNet7AotPInvoke' './rust-cxx/target/release/rust-cxx'
+	hyperfine -N --warmup 5 --runs 100 './native/Main' 'dotnet ./dotnet6/bin/Release/net6.0/DotNet6.dll' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' './dotnet7aot/bin/Release/net7.0/linux-arm64/publish/DotNet7Aot' './dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/DotNet7AotPInvoke' './rust-cxx/target/release/rust-cxx'
