@@ -38,9 +38,6 @@ compile-rust-cxx:
 	cd ..
 	rm ./rust-cxx/src/NativeStuff.*
 
-compile-go:
-	cd go && go build -o ./bin/main
-
 compile-all:
 	make compile-native
 	make compile-dotnet6
@@ -49,11 +46,10 @@ compile-all:
 	make compile-dotnet7aot-pinvoke
 	make compile-rust
 	make compile-rust-cxx
-	make compile-go
 
 prepare-and-benchmark:
 	make compile-all
 	make benchmark
 
 benchmark:
-	hyperfine -N --warmup 10 --runs 100 './native/Main' 'dotnet ./dotnet6/bin/Release/net6.0/DotNet6.dll' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' './dotnet7aot/bin/Release/net7.0/linux-arm64/publish/DotNet7Aot' './dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/DotNet7AotPInvoke' './rust-cxx/target/release/rust-cxx' './go/bin/main' './rust/target/release/rust'
+	hyperfine -N --warmup 10 --runs 100 './native/Main' 'dotnet ./dotnet6/bin/Release/net6.0/DotNet6.dll' 'dotnet ./dotnet6-pinvoke/bin/Release/net6.0/DotNet6PInvoke.dll' './dotnet7aot/bin/Release/net7.0/linux-arm64/publish/DotNet7Aot' './dotnet7aot-pinvoke/bin/Release/net7.0/linux-arm64/publish/DotNet7AotPInvoke' './rust-cxx/target/release/rust-cxx' './rust/target/release/rust'
